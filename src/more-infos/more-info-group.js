@@ -2,8 +2,13 @@ import hass from '../util/home-assistant-js-instance';
 
 import Polymer from '../polymer';
 import nuclearObserver from '../util/bound-nuclear-behavior';
+import dynamicContentUpdater from '../util/dynamic-content-updater';
+
 
 require('../state-summary/state-card-content');
+
+require('./more-info-light');
+
 
 const {
   entityGetters,
@@ -18,7 +23,10 @@ export default new Polymer({
   properties: {
     stateObj: {
       type: Object,
+      observer: 'stateObjChanged'
     },
+
+
 
     states: {
       type: Array,
@@ -35,5 +43,12 @@ export default new Polymer({
         },
       ],
     },
+  },
+
+  stateObjChanged(stateObj) {
+    if (!stateObj || stateObj.attributes.group_domain == 'group') return;
+
+    dynamicContentUpdater(
+      this.$.groupedControlDetails, `MORE-INFO-${stateObj.attributes.group_domain.toUpperCase()}`, { stateObj });
   },
 });
