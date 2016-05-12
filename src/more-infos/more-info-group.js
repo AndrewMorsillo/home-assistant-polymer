@@ -46,9 +46,15 @@ export default new Polymer({
   },
 
   stateObjChanged(stateObj) {
-    if (!stateObj || stateObj.attributes.group_domain == 'group') return;
+    if (!stateObj || stateObj.attributes.group_domain == 'group'){
+      let el = Polymer.dom(this.$.groupedControlDetails);
+      if (el.lastChild) {
+        el.removeChild(el.lastChild);
+      }
+    } else {
+      dynamicContentUpdater(
+        this.$.groupedControlDetails, `MORE-INFO-${stateObj.attributes.group_domain.toUpperCase()}`, { stateObj });
+    };
 
-    dynamicContentUpdater(
-      this.$.groupedControlDetails, `MORE-INFO-${stateObj.attributes.group_domain.toUpperCase()}`, { stateObj });
   },
 });
