@@ -33,8 +33,8 @@ export default new Polymer({
   },
   entityTapped(ev) {
     if (ev.target.classList.contains('paper-toggle-button') ||
-        ev.target.classList.contains('paper-icon-button') ||
-         (!ev.model && !this.groupEntity)){
+        ev.target.classList.contains('paper-icon-button') || 
+        (!ev.model && !this.groupEntity)){
       return;
     }
     ev.stopPropagation();
